@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <body>
@@ -12,7 +13,7 @@
 
 
     <script>
-        var a= [2, 3, 4, 3.5];
+        var a= [2, 2.5, 4, 3.5];
         document.getElementById("arr").innerHTML = "This is a simple array: "+ a;
         document.getElementById("arr_ind").innerHTML = "This is the 4th element in the above array: "+ a[3];
         <!--- change to a[1] and check--->
@@ -30,10 +31,10 @@
             eyeColor: "brown",
         };
         
-        document.getElementById("person_obj").innerHTML = person.firstName + " is " + person.age + " years old.";
+        document.getElementById("person_obj").innerHTML = person.firstName + " has " + person.eyeColor + " eyes.";
+        
+        document.getElementById("person_obj").innerHTML = person.firstName + " has the last name of " + person.lastName;
 
-
-    
 
     </script>
 
