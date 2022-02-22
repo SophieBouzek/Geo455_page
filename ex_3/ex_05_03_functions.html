@@ -22,7 +22,7 @@
             return p1 * p2;
         };
         
-        document.getElementById("multiply").innerHTML = "This is result of multiply function: "+ multiply(512, 256);
+        document.getElementById("multiply").innerHTML = "This is result of multiply function: "+ multiply(417, 162);
         // change the parameters and check ..
         
         // create a function to return square root of a number ..
@@ -46,14 +46,14 @@
         
         
         var person = {
-            firstName: "Juan",
+            firstName: "Zach",
             lastName: "Carlos",
-            age: 50,
+            age: 22,
             eyeColor: "brown",
             fullName: function() {return this.firstName + " " + this.lastName;}
         };
         document.getElementById("method").innerHTML = person.fullName();
-        document.getElementById("method1").innerHTML = person.fullName().toUpperCase() + " was a spanish king";
+        document.getElementById("method1").innerHTML = person.fullName().toUpperCase() + " loved to play video games.";
         
         
         var a = [1, 7, 15, 16, 7, [3, 4]];
@@ -61,15 +61,12 @@
         document.getElementById("len2").innerHTML = "The length of the 5th element is: " + a[5].length;  
         
         
-        var midwest = ["Wisconsin", "Minnesota", "Iowa", "Illinois"];
+        var midwest = ["Wisconsin", "New York", "Stoughton", "Illinois"];
         midwest.pop();
         document.getElementById("pop_method").innerHTML = midwest; //removes the last element
         midwest.push("Michigan");
         document.getElementById("push_method").innerHTML = midwest;// adds michigan at the end
         
-
-        
-
 
 
     
