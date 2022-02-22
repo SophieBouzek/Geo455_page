@@ -1,11 +1,10 @@
-<!DOCTYPE html>
 <html>
 <body>
 
     <h2>JavaScript Flow Controls</h2>
 
-    <p id="good_day"></p>
-    <p id="good_eve"></p>
+    <p id="happy day"></p>
+    <p id="good_night"></p>
     <p id="good_all"></p>
 
 
@@ -16,23 +15,23 @@
         var greeting ; 
         
         if (hour < 18) {
-            greeting = "Good day!";
+            greeting = "happy day!";
         }
-        document.getElementById("good_day").innerHTML = greeting;
+        document.getElementById("happy day").innerHTML = greeting;
         
         if (hour < 16) {// change the hour values based on the current time.
-            greeting = "Good day!";
+            greeting = "happy day!";
         } else {
-            greeting = "Good evening!";
+            greeting = "Good night!";
         }
-        document.getElementById("good_eve").innerHTML = greeting;
+        document.getElementById("good_night").innerHTML = greeting;
         
         if (hour < 12) {
             greeting = "Good Morning!";
         } else if (hour <18){
             greeting = "Good Afternoon!";
         } else {
-            greeting = "Good Evening!";
+            greeting = "Good morrow!";
         }
         document.getElementById("good_all").innerHTML = greeting;
         
