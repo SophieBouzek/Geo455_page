@@ -1,9 +1,8 @@
-//Creating the map variable
+
 var mymap = L.map("map", {
     center: [6.794952075439587, 20.91148703911037], 
     zoom: 3});
 
-// Set up baselayers
 var streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2NoYXVkaHVyaSIsImEiOiJjazBtcG5odG8wMDltM2JtcjdnYTgyanBnIn0.qwqjMomdrBMG36GQKXBlMw', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -20,7 +19,6 @@ var grayscale = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
     zoomOffset: -1
 }).addTo(mymap);
 
-//Set up icon variables
 var myIcon1 = L.icon({
     iconUrl: 'images/icon_1.png',
     iconSize: [30, 30],
@@ -70,7 +68,6 @@ var myIcon7 = L.icon({
     popupAnchor: [15,10],
 });
 
-// Create custom popups with images
 var greatwallPopup = "Great Wall of China<br/><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/20090529_Great_Wall_8185.jpg/256px-20090529_Great_Wall_8185.jpg' alt='great wall wiki' width='150px'/>";
 
 var chichenPopup = "Chichen-Itza, Mexico<br/><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/003_El_Castillo_o_templo_de_Kukulkan._Chich%C3%A9n_Itz%C3%A1%2C_M%C3%A9xico._MPLC.jpg/256px-003_El_Castillo_o_templo_de_Kukulkan._Chich%C3%A9n_Itz%C3%A1%2C_M%C3%A9xico._MPLC.jpg' alt='chichen-itza wiki' width='150px'/>";
@@ -88,8 +85,7 @@ var tajPopup = "Taj Mahal, India <br/><img src='https://upload.wikimedia.org/wik
 
 var customOptions ={'maxWidth': '150','className' : 'custom'};
 
-          
-// Data points
+        
 coords = [
     [40.43208734303398, 116.570439270903],
     [41.89040186252818, 12.492252355598225],
@@ -99,8 +95,6 @@ coords = [
     [-22.951728275037908, -43.210412100446604],
     [27.175354762373193, 78.04214219760772]
 ];
-
-// Marker Layergroup
 var loc = L.layerGroup();
 L.marker(coords[0], {icon: myIcon1}).bindPopup(greatwallPopup, customOptions).addTo(loc);
 L.marker(coords[1], {icon: myIcon2}).bindPopup(coloPopup, customOptions).addTo(loc);
@@ -111,16 +105,11 @@ L.marker(coords[5], {icon: myIcon6}).bindPopup(christPopup, customOptions).addTo
 L.marker(coords[6], {icon: myIcon7}).bindPopup(tajPopup, customOptions).addTo(loc);
 loc.addTo(mymap);
 
-
-// Add Line
-var line = L.polyline(coords, {color: "red", weight: 7}).bindPopup("Travel Path");
+var line = L.polyline(coords, {color: "pink", weight: 4}).bindPopup("Travel Path");
 line.addTo(mymap);
-
-// Add a scalebar 
+ 
 L.control.scale({position: 'bottomright', maxWidth: '150', metric: 'True'}).addTo(mymap);
 
-
-// Create menu items
 var baseLayers = {
     'Grayscale': grayscale,
     'Streets': streets,
@@ -131,21 +120,16 @@ var overlays = {
     'Travel Path': line,
 };
 
-//Create the menu window
-var layerControl = L.control.layers(baseLayers, overlays, {collapsed: false}).addTo(mymap); //collapsed: true is defaults
+var layerControl = L.control.layers(baseLayers, overlays, {collapsed: false}).addTo(mymap); 
 
-//Create locator map
 var miniMap = new L.Control.MiniMap(L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=tZnptaeI9RvKHsX18rbW'), {
     toggleDisplay: true,
     minimized: true,
     position: 'bottomleft'
 }).addTo(mymap);
 
-//Pop-up for showing XY coordinates on map
-//// Create an empty popup
 var popup = L.popup();
             
-//// Function to set popup contents
 function onMapClick(e) {
     popup
         .setLatLng(e.latlng)
@@ -155,10 +139,8 @@ function onMapClick(e) {
         "<b>lat:</b> " + e.latlng.lat
     ).openOn(mymap);}
 
-//// Add event listener for click events to show lat long on the map
 mymap.addEventListener("click", onMapClick);
 
-// Add Navigation Buttons
 L.easyButton(('1 height=50%'), function(btn, map){
     map.setView(coords[0], 15);
 }).addTo(mymap);
@@ -185,7 +167,6 @@ L.easyButton(('<img src="images/globe_icon.png", height=85%>'), function(btn, ma
     map.setView([6.794952075439587, 20.91148703911037], 3);
 }).addTo(mymap);
 
-// Make International Space Station (ISS) marker with a custom icon
   var issIcon = L.icon({
     iconUrl: 'images/iss200.png',
     iconSize: [80, 52],
@@ -193,18 +174,15 @@ L.easyButton(('<img src="images/globe_icon.png", height=85%>'), function(btn, ma
   });
   var marker = L.marker([0, 0], {icon: issIcon}).addTo(mymap);
 
-// Call the ISS real time data URL
   var api_url = 'https://api.wheretheiss.at/v1/satellites/25544';
 
   var firstTime = true;
 
-// Update the Lat/long based on the updated reading everytime
   async function getISS() {
     var response = await fetch(api_url);
     var data = await response.json();
     var { latitude, longitude } = data;
 
-// Change the marker location based on the updated reading but keep the map view in default center
     marker.setLatLng([latitude, longitude]);
     if (firstTime) {
       mymap.setView([6.794952075439587, 20.91148703911037], 3);
