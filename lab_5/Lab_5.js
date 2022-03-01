@@ -1,9 +1,8 @@
-//Creating the map variable
+
 var mymap = L.map("map", {
     center: [6.794952075439587, 20.91148703911037], 
     zoom: 3});
 
-// Set up baselayers
 var streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2NoYXVkaHVyaSIsImEiOiJjazBtcG5odG8wMDltM2JtcjdnYTgyanBnIn0.qwqjMomdrBMG36GQKXBlMw', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -20,7 +19,6 @@ var grayscale = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}
     zoomOffset: -1
 }).addTo(mymap);
 
-//Set up icon variables
 var myIcon1 = L.icon({
     iconUrl: 'images/icon_1.png',
     iconSize: [30, 30],
