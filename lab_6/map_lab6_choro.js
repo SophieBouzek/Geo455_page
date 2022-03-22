@@ -12,16 +12,16 @@ var mymap = L.map('map', {
 
 
 function getColor(value) {
-    return value > 139 ? '#045a8d':
-           value > 87  ? '#2b8cbe':
-           value > 53  ? '#74a9cf':
-           value > 32  ? '#bdc9e1':
-                         '#f1eef6';
+    return value > 139 ? '#54278f':
+           value > 87  ? '#756bb1':
+           value > 53  ? '#9e9ac8':
+           value > 32  ? '#cbc9e2':
+                         '#f2f0f7';
 }
 
 function style(feature){
     return {
-        fillColor: getColor(feature.properties.pop_den),  
+        fillColor: getColor(feature.properties.pop_den),   // pop_den is the field name for the population density data
         weight: 2,
         opacity: 1,
         color: 'gray',
@@ -30,15 +30,20 @@ function style(feature){
     }
 
   function highlightFeature(e) {
-  
+    // Get access to the feature that was hovered through e.target
     var feature = e.target;
 
+    // Set a thick grey border on the feature as mouseover effect
+    // Adjust the values below to change the highlighting styles of features on mouseover
+    // Check out https://leafletjs.com/reference-1.3.4.html#path for more options for changing style
     feature.setStyle({
         weight: 5,
         color: '#666',
         fillOpacity: 0.7
     });
 
+    // Bring the highlighted feature to front so that the border doesn’t clash with nearby states
+    // But not for IE, Opera or Edge, since they have problems doing bringToFront on mouseover
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         feature.bringToFront();
     }
@@ -46,8 +51,8 @@ function style(feature){
 
     function onEachFeature(feature, layer) {
         layer.on({
-            mouseover: highlightFeature, 
-            mouseout: resetHighlight,    
+            mouseover: highlightFeature, // Do what defined by the highlightFeature function on mouseover
+            mouseout: resetHighlight,    // Do what defined by the resetHighlight function on mouseout
         });
     }
 
@@ -68,16 +73,17 @@ function style(feature){
 
 
 
-  var legend = L.control({position: 'bottomright'});
+  var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
     legend.onAdd = function (mymap) {
 
         var div = L.DomUtil.create('div', 'legend'),
-            grades = [0, 32, 53, 87, 139]; 
+            grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
 
-        div.innerHTML = '<b>Population Density <br></b>'; 
+        div.innerHTML = '<b>Population Density <br></b>'; // The legend title (HTML-based), in this case it's Population Density 2011
 
-    
+        // Loop through our the classes and generate a label with a color box for each interval.
+        // If you are creating a choropleth map, you DO NOT need to change lines below.
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
             '<i style="background:' + getColor(grades[i] + 1) + '"></i>' +
