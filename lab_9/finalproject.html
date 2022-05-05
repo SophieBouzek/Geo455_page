@@ -1,0 +1,981 @@
+<html 
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="cssleaflet.css">
+        <link rel="stylesheet" href="cssgisweb.css"><link rel="stylesheet" href="font.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        body,td,th {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color: #666;
+	font-size: 12px;
+}
+        a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+        </style>
+        <title> Interactive map of Chicago </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+    
+    
+    
+        
+<table width="100%" height="102" border="0" align="center" cellpadding="10">
+  <tr>
+    <td height="98" align="left" valign="top">
+      <table width="800" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+ 
+          <td width="301">&nbsp;</td>
+    
+        </tr>
+      </table>
+      <table width="800" height="34" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="777"><p><strong>Interactice map of Chicago</strong> This map you can explore some basic information about this. This map was created to help people that our new to the city. Showing them the train lines to get into the city and the L lines to get around the city. Also showing where diffrent libraries, Hospitals and parks. Also showing data on diffrent housing values in diffrent areas and some of the areas that are of racial and ethnic classification. </p></td>
+            <img scr="loop-1800x900.jpg" alt="Chicago">
+            <script scr=https://www.chicago.gov/city/en.html></script>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+
+
+    
+<div id="map">
+</div>
+        <script src="expressions.js"></script>
+        <script src="leaflet.js"></script>
+        <script src="leaflet_shape.js"></script>
+        <script src="leafet.rotated.js"></script>
+        <script src="leaflet.pattern.js"></script>
+        <script src="leaflet.hash.js"></script>
+        <script src="autolinker.js"></script>
+        <script src="rbrush.js"></script>
+        <script src="label.js"></script>
+        <script src="label2.js"></script>
+        <script src="neighborhoods.js"></script>
+        <script src="rail_lines.js"></script>
+        <script src="rail_stations.js"></script>
+        <script src="ethnic_classification.js"></script>
+        <script src="housing_value.js"></script>
+        <script src="vacantlots.js"></script>
+        <script src="parks.js"></script>
+        <script src="metra_lines.js"></script>
+        <script src="hospitals.js"></script>
+        <script src="Libraries.js"></script>
+        <script src="policestations.js"></script>
+        <script src="mapnew.js"></script>
+        <script scr="basemaps.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:9
+        }).fitBounds([[41.573483553293286,-87.85345643226897],[42.011437900512036,-87.20435766107016]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_OpenStreetMap_0 = L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 0.471,
+            attribution: '',
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_Neighborhoods_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Neighborhoods_1_0() {
+            return {
+                pane: 'pane_Neighborhoods_1',
+                opacity: 0.6,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.6, 
+                fill: true,
+                fillOpacity: 0.6,
+                fillColor: 'rgba(218,217,217,1.0)',
+            }
+        }
+        map.createPane('pane_Neighborhoods_1');
+        map.getPane('pane_Neighborhoods_1').style.zIndex = 401;
+        map.getPane('pane_Neighborhoods_1').style['mix-blend-mode'] = 'normal';
+        var layer_Neighborhoods_1 = new L.geoJson(json_Neighborhoods_1, {
+            attribution: '',
+            pane: 'pane_Neighborhoods_1',
+            onEachFeature: pop_Neighborhoods_1,
+            style: style_Neighborhoods_1_0,
+        });
+        bounds_group.addLayer(layer_Neighborhoods_1);
+        map.addLayer(layer_Neighborhoods_1);
+        function pop_CTA_Rail_Lines_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_CTA_Rail_Lines_2_0(feature) {
+            switch(String(feature.properties['LINES'])) {
+                case 'Blue Line (Forest Park)':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(0,112,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Blue Line (O\'Hare)':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(0,112,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Brown Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(122,63,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Brown, Green, Orange, Pink, Purple (Exp)':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(162,166,172,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Brown, Orange, Pink, Purple (Express)':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(162,166,172,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Brown, Purple':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(128,94,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Brown, Purple (Express), Red':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(128,94,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Green Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(0,188,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Green, Orange':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(0,188,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Green, Pink':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(236,64,121,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Orange Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(255,179,15,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Pink Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(236,64,121,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Purple Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(128,94,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Red Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(255,0,4,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Red, Purple Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(128,94,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Yellow Line':
+                    return {
+                pane: 'pane_CTA_Rail_Lines_2',
+                opacity: 3,
+                color: 'rgba(251,255,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_CTA_Rail_Lines_2');
+        map.getPane('pane_CTA_Rail_Lines_2').style.zIndex = 402;
+        map.getPane('pane_CTA_Rail_Lines_2').style['mix-blend-mode'] = 'normal';
+        var layer_CTA_Rail_Lines_2 = new L.geoJson(json_CTA_Rail_Lines_2, {
+            attribution: '',
+            pane: 'pane_CTA_Rail_Lines_2',
+            onEachFeature: pop_CTA_Rail_Lines_2,
+            style: style_CTA_Rail_Lines_2_0,
+        });
+        bounds_group.addLayer(layer_CTA_Rail_Lines_2);
+        map.addLayer(layer_CTA_Rail_Lines_2);
+        function pop_CTA_Rail_Stations_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_CTA_Rail_Stations_3_0() {
+            return {
+                pane: 'pane_CTA_Rail_Stations_3',
+                shape: 'diamond',
+                radius: 2.5,
+                stroke: false,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,125,129,1.0)',
+            }
+        }
+        map.createPane('pane_CTA_Rail_Stations_3');
+        map.getPane('pane_CTA_Rail_Stations_3').style.zIndex = 403;
+        map.getPane('pane_CTA_Rail_Stations_3').style['mix-blend-mode'] = 'normal';
+        var layer_CTA_Rail_Stations_3 = new L.geoJson(json_CTA_Rail_Stations_3, {
+            attribution: '',
+            pane: 'pane_CTA_Rail_Stations_3',
+            onEachFeature: pop_CTA_Rail_Stations_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_CTA_Rail_Stations_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CTA_Rail_Stations_3);
+        map.addLayer(layer_CTA_Rail_Stations_3);
+        function pop_Racialethnicclassification_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['community'] !== null ? Autolinker.link(String(feature.properties['community'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Total population</th>\
+                        <td>' + (feature.properties['Race SF1_2010_Field3'] !== null ? Autolinker.link(String(feature.properties['Race SF1_2010_Field3'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">White non-Hispanic</th>\
+                        <td>' + (feature.properties['Race SF1_2010_Field4'] !== null ? Autolinker.link(String(feature.properties['Race SF1_2010_Field4'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Black non-Hispanic</th>\
+                        <td>' + (feature.properties['Race SF1_2010_Field5'] !== null ? Autolinker.link(String(feature.properties['Race SF1_2010_Field5'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Asian non-Hispanic</th>\
+                        <td>' + (feature.properties['Race SF1_2010_Field7'] !== null ? Autolinker.link(String(feature.properties['Race SF1_2010_Field7'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Hispanic of any race</th>\
+                        <td>' + (feature.properties['Race SF1_2010_Field11'] !== null ? Autolinker.link(String(feature.properties['Race SF1_2010_Field11'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_Racialethnicclassification_4_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            
+            if (Racialethnicclassification_4rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,16,70,1.0)',
+            };
+                }
+                else if (Racialethnicclassification_4rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,113,143,1.0)',
+            };
+                }
+                else if (Racialethnicclassification_4rule2_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(68,139,30,1.0)',
+            };
+                }
+                else if (Racialethnicclassification_4rule3_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(170,219,157,1.0)',
+            };
+                }
+                else if (Racialethnicclassification_4rule4_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(35,111,225,1.0)',
+            };
+                }
+                else if (Racialethnicclassification_4rule5_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,210,57,1.0)',
+            };
+                }
+                else if (Racialethnicclassification_4rule6_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,249,176,1.0)',
+            };
+                }
+                else if (Racialethnicclassification_4rule7_eval_expression(context)) {
+                  return {
+                pane: 'pane_Racialethnicclassification_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_Racialethnicclassification_4');
+        map.getPane('pane_Racialethnicclassification_4').style.zIndex = 404;
+        map.getPane('pane_Racialethnicclassification_4').style['mix-blend-mode'] = 'normal';
+        var layer_Racialethnicclassification_4 = new L.geoJson(json_Racialethnicclassification_4, {
+            attribution: '',
+            pane: 'pane_Racialethnicclassification_4',
+            onEachFeature: pop_Racialethnicclassification_4,
+            style: style_Racialethnicclassification_4_0,
+        });
+        bounds_group.addLayer(layer_Racialethnicclassification_4);
+        function pop_Median_housing_value_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Value'] !== null ? Autolinker.link(String(feature.properties['Value'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Median_housing_value_5_0(feature) {
+            if (feature.properties['Value'] >= 0.000000 && feature.properties['Value'] <= 200000.000000 ) {
+                return {
+                pane: 'pane_Median_housing_value_5',
+                opacity: 1,
+                color: 'rgba(165,165,165,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+            }
+            }
+            if (feature.properties['Value'] >= 200000.000000 && feature.properties['Value'] <= 450000.000000 ) {
+                return {
+                pane: 'pane_Median_housing_value_5',
+                opacity: 1,
+                color: 'rgba(122,122,122,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(193,179,140,1.0)',
+            }
+            }
+            if (feature.properties['Value'] >= 450000.000000 && feature.properties['Value'] <= 1120600.000000 ) {
+                return {
+                pane: 'pane_Median_housing_value_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(131,102,24,1.0)',
+            }
+            }
+            if (feature.properties['Value'] >= 0.000000 && feature.properties['Value'] <= 0.000000 ) {
+                return {
+                pane: 'pane_Median_housing_value_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,190,190,1.0)',
+            }
+            }
+        }
+        map.createPane('pane_Median_housing_value_5');
+        map.getPane('pane_Median_housing_value_5').style.zIndex = 405;
+        map.getPane('pane_Median_housing_value_5').style['mix-blend-mode'] = 'normal';
+        var layer_Median_housing_value_5 = new L.geoJson(json_Median_housing_value_5, {
+            attribution: '',
+            pane: 'pane_Median_housing_value_5',
+            onEachFeature: pop_Median_housing_value_5,
+            style: style_Median_housing_value_5_0,
+        });
+        bounds_group.addLayer(layer_Median_housing_value_5);
+        function pop_Vacantlots_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Vacantlots_6_0() {
+            return {
+                pane: 'pane_Vacantlots_6',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(77,204,180,1.0)',
+            }
+        }
+        map.createPane('pane_Vacantlots_6');
+        map.getPane('pane_Vacantlots_6').style.zIndex = 406;
+        map.getPane('pane_Vacantlots_6').style['mix-blend-mode'] = 'normal';
+        var layer_Vacantlots_6 = new L.geoJson(json_Vacantlots_6, {
+            attribution: '',
+            pane: 'pane_Vacantlots_6',
+            onEachFeature: pop_Vacantlots_6,
+            style: style_Vacantlots_6_0,
+        });
+        bounds_group.addLayer(layer_Vacantlots_6);
+        function pop_Parks_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Parks_7_0() {
+            return {
+                pane: 'pane_Parks_7',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,255,182,1.0)',
+            }
+        }
+        map.createPane('pane_Parks_7');
+        map.getPane('pane_Parks_7').style.zIndex = 407;
+        map.getPane('pane_Parks_7').style['mix-blend-mode'] = 'normal';
+        var layer_Parks_7 = new L.geoJson(json_Parks_7, {
+            attribution: '',
+            pane: 'pane_Parks_7',
+            onEachFeature: pop_Parks_7,
+            style: style_Parks_7_0,
+        });
+        bounds_group.addLayer(layer_Parks_7);
+        map.addLayer(layer_Parks_7);
+        function pop_MetraLines_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_MetraLines_8_0() {
+            return {
+                pane: 'pane_MetraLines_8',
+                opacity: 3,
+                color: 'rgba(229,163,48,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 2.5,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_MetraLines_8');
+        map.getPane('pane_MetraLines_8').style.zIndex = 408;
+        map.getPane('pane_MetraLines_8').style['mix-blend-mode'] = 'normal';
+        var layer_MetraLines_8 = new L.geoJson(json_MetraLines_8, {
+            attribution: '',
+            pane: 'pane_MetraLines_8',
+            onEachFeature: pop_MetraLines_8,
+            style: style_MetraLines_8_0,
+        });
+        bounds_group.addLayer(layer_MetraLines_8);
+        function pop_Hospitals_9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FACILITY'] !== null ? Autolinker.link(String(feature.properties['FACILITY'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Hospitals_9_0() {
+            return {
+                pane: 'pane_Hospitals_9',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'Hospitals_9.png',
+            iconSize: [20, 20]
+        }),
+            }
+        }
+        map.createPane('pane_Hospitals_9');
+        map.getPane('pane_Hospitals_9').style.zIndex = 409;
+        map.getPane('pane_Hospitals_9').style['mix-blend-mode'] = 'normal';
+        var layer_Hospitals_9 = new L.geoJson(json_Hospitals_9, {
+            attribution: '',
+            pane: 'pane_Hospitals_9',
+            onEachFeature: pop_Hospitals_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Hospitals_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Hospitals_9);
+        function pop_Libraries_10(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? Autolinker.link(String(feature.properties['NAME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Libraries_10_0() {
+            return {
+                pane: 'pane_Libraries_10',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'Libraries_10.png',
+            iconSize: [20, 20]
+        }),
+            }
+        }
+        map.createPane('pane_Libraries_10');
+        map.getPane('pane_Libraries_10').style.zIndex = 410;
+        map.getPane('pane_Libraries_10').style['mix-blend-mode'] = 'normal';
+        var layer_Libraries_10 = new L.geoJson(json_Libraries_10, {
+            attribution: '',
+            pane: 'pane_Libraries_10',
+            onEachFeature: pop_Libraries_10,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Libraries_10_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Libraries_10);
+        function pop_Policestations_11(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_Policestations_11_0() {
+            return {
+                pane: 'pane_Policestations_11',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'Policestations_11.png',
+            iconSize: [25, 25]
+        }),
+            }
+        }
+        map.createPane('pane_Policestations_11');
+        map.getPane('pane_Policestations_11').style.zIndex = 411;
+        map.getPane('pane_Policestations_11').style['mix-blend-mode'] = 'normal';
+        var layer_Policestations_11 = new L.geoJson(json_Policestations_11, {
+            attribution: '',
+            pane: 'pane_Policestations_11',
+            onEachFeature: pop_Policestations_11,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Policestations_11_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Policestations_11);
+        function pop_MapTwins_12(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Address'] !== null ? Autolinker.link(String(feature.properties['Address'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MapTwins_12_0() {
+            return {
+                pane: 'pane_MapTwins_12',
+                shape: 'diamond',
+                radius: 3,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 0.5,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,154,39,1.0)',
+            }
+        }
+        map.createPane('pane_MapTwins_12');
+        map.getPane('pane_MapTwins_12').style.zIndex = 412;
+        map.getPane('pane_MapTwins_12').style['mix-blend-mode'] = 'normal';
+        var layer_MapTwins_12 = new L.geoJson(json_MapTwins_12, {
+            attribution: '',
+            pane: 'pane_MapTwins_12',
+            onEachFeature: pop_MapTwins_12,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_MapTwins_12_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_MapTwins_12);
+        map.addLayer(layer_MapTwins_12);
+        var baseMaps = {'<img src="MapTwins_12.png" /> Map Twins': layer_MapTwins_12,
+        };
+        L.control.layers(baseMaps,{'<img src="Policestations_11.png" /> Police stations':layer_Policestations_11,'<img src="Libraries_10.png" /> Libraries': layer_Libraries_10,'<img src="Hospitals_9.png" /> Hospitals': layer_Hospitals_9,'<img src="MetraLines_8.png" /> Metra Lines': layer_MetraLines_8,'<img src="Parks_7.png" /> Parks': layer_Parks_7,'<img src="Vacantlots_6.png" /> Vacant lots': layer_Vacantlots_6,'Median_housing_value<br /><table><tr><td style="text-align: center;"><img src="Median_housing_value_5_Low200K0.png" /></td><td>Low (< 200K)</td></tr><tr><td style="text-align: center;"><img src="Median_housing_value_5_Medium200K450K1.png" /></td><td>Medium (200K - 450K)</td></tr><tr><td style="text-align: center;"><img src="Median_housing_value_5_High450K2.png" /></td><td>High (> 450K)</td></tr><tr><td style="text-align: center;"><img src="Median_housing_value_5_Nodata3.png" /></td><td>No data</td></tr></table>': layer_Median_housing_value_5,'Racial / ethnic classification<br /><table><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_WhitenonHispanic800.png" /></td><td>White non-Hispanic >80% </td></tr><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_WhitenonHispanic50801.png" /></td><td>White non-Hispanic 50%-80% </td></tr><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_BlacknonHispanic802.png" /></td><td>Black non-Hispanic >80% </td></tr><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_BlacknonHispanic50803.png" /></td><td>Black non-Hispanic 50%-80% </td></tr><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_AsiannonHispanic504.png" /></td><td>Asian non-Hispanic >50% </td></tr><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_Hispanicofanyrace805.png" /></td><td>Hispanic of any race >80%</td></tr><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_Hispanicofanyrace50806.png" /></td><td>Hispanic of any race 50%-80%</td></tr><tr><td style="text-align: center;"><img src="Racialethnicclassification_4_Nomajority7.png" /></td><td>No majority</td></tr></table>': layer_Racialethnicclassification_4,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
