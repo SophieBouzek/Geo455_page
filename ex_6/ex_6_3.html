@@ -1,0 +1,41 @@
+<html>
+   <head>
+      <title>Ex- 6-2: CSS manipulation</title>
+       <style>
+           .charac {
+               float: left;
+           }
+           img {
+              width: 200px; 
+               height: 200px; 
+           }
+      </style>
+    </head>
+      <script type = "text/javascript" 
+         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
+
+      <script>
+          
+       $(document).ready(function() {
+              $("img").click(function(){
+                  $(this).hide();
+              });
+          });
+
+      </script>
+
+	
+   <body>
+       <h1> Beautiful places  </h1>
+       <p> around the world  </p>
+       <div class= "charac">
+           <img src="pic1.jpg">
+           <img src="pic2.jpg">
+           <img src="pic3.jpg">
+           <img src="pic4.jpg">
+       </div>
+       
+
+   </body>
+</html>
